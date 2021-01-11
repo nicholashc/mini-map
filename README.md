@@ -1,2 +1,3 @@
 # mini-map
-mini-map plugin for dark forest
+
+Mini-map terrain explorer plugin for Dark Forest v0.5. Created for the DF v0.5 Community Plugins Contest.
