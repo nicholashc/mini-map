@@ -131,30 +131,16 @@ class Plugin {
 
         const ctx = this.canvas.getContext('2d');
 
-        let inner = 0;
-        let outer = 0;
-        let space = 0;
-
         for (let i = 0; i < data.length; i++) {
           if (data[i].type === 0) {
             ctx.fillStyle = '#21215d'; // inner nebula
-            inner++;
           } else if (data[i].type === 1) {
             ctx.fillStyle = '#24247d'; // outer nebula
-            outer++;
           } else if (data[i].type === 2) {
             ctx.fillStyle = '#000000'; // deep space
-            space++;
           }
           ctx.fillRect( normalize(data[i].x) + 10, normalize(data[i].y * -1) + 10, dot, dot );
         }
-
-        let total = inner+outer+space;
-        console.log(`
-        inner: ${inner} -  ${((inner / total) * 100).toFixed(2)}%,
-        outer: ${outer} -  ${((outer / total) * 100).toFixed(2)}%,
-        space: ${space} -  ${((space / total) * 100).toFixed(2)}%,
-        total: ${total} - 100.00%`);
 
         // draw larger white pixel at home coordinates
 
