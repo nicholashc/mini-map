@@ -17,8 +17,8 @@ class Plugin {
 
   constructor() {
     this.canvas = document.createElement('canvas');
-    this.canvas.width = '760';
-    this.canvas.height = '760';
+    this.canvas.width = '400';
+    this.canvas.height = '200';
     this.minDensity = 1000;
     this.maxDensity = 10000;
   }
@@ -33,9 +33,10 @@ class Plugin {
       div.style.maxHeight = '1200px';
 
       const radius = ui.getWorldRadius();
-      const sizeFactor = (this.canvas.width / 2) + 30;
       let step = 5000;
       let dot = 4;
+      let canvasSize = 800;
+      let sizeFactor = 430;
 
       // utility functions
 
@@ -88,27 +89,48 @@ class Plugin {
         step = Number(`${evt.target.value}`);
       }
 
-      let pixel = document.createElement('input');
-      pixel.type = 'range';
-      pixel.min = '1';
-      pixel.max = '10';
-      pixel.step = '1';
-      pixel.value = '4';
-      pixel.style.width = '100%';
-      pixel.style.height = '12px';
+      let pixelStepper = document.createElement('input');
+      pixelStepper.type = 'range';
+      pixelStepper.min = '1';
+      pixelStepper.max = '10';
+      pixelStepper.step = '1';
+      pixelStepper.value = '4';
+      pixelStepper.style.width = '100%';
+      pixelStepper.style.height = '12px';
 
       let pixelVal = document.createElement('label');
-      pixelVal.innerText = `pixel size: ${pixel.value}px`;
+      pixelVal.innerText = `pixel size: ${pixelStepper.value}px`;
       pixelVal.style.display = 'block';
 
-      pixel.onchange = (evt) => {
+      pixelStepper.onchange = (evt) => {
         pixelVal.innerText = `pixel size: ${evt.target.value}px`;
         dot = Number(`${evt.target.value}`);
+      }
+
+      let canvasStepper = document.createElement('input');
+      canvasStepper.type = 'range';
+      canvasStepper.min = '400';
+      canvasStepper.max = '1000';
+      canvasStepper.step = '10';
+      canvasStepper.value = '800';
+      canvasStepper.style.width = '100%';
+      canvasStepper.style.height = '12px';
+
+      let canvasVal = document.createElement('label');
+      canvasVal.innerText = `map size: ${canvasStepper.value}px`;
+      canvasVal.style.display = 'block';
+
+      canvasStepper.onchange = (evt) => {
+        canvasVal.innerText = `map size: ${evt.target.value}px`;
+        canvasSize = Number(`${evt.target.value}`);
       }
 
       // sample points in a grid and determine space type
 
       const generate = () => {
+        this.canvas.width = canvasSize;
+        this.canvas.height = canvasSize;
+        sizeFactor = (1200 - canvasSize) + 20;
         let data = [];
 
         // generate x coordinates
@@ -176,8 +198,10 @@ class Plugin {
       div.appendChild(clearButton);
       div.appendChild(stepper);
       div.appendChild(steppedVal);
-      div.appendChild(pixel);
+      div.appendChild(pixelStepper);
       div.appendChild(pixelVal);
+      div.appendChild(canvasStepper);
+      div.appendChild(canvasVal);
       div.appendChild(this.canvas);
   }
 
